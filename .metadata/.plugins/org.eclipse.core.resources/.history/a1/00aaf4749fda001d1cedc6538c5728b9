@@ -1,0 +1,21 @@
+package kr.board.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller // 컨트롤러로 인식을 한다.
+public class BoardController {
+	
+	@RequestMapping("/list") // /list ---HandlerMapping---> 요청이 list() 메소드가 실행
+	public String list() {
+		List<String> list = new ArrayList<String>();
+		list.add("사과");
+		list.add("바나나");
+		list.add("오렌지");
+		return null;
+	}
+	
+}
