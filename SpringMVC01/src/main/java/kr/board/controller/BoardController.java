@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller // 컨트롤러로 인식을 한다.
-public class BoardController {
+public class BoardController { //Service(X) -> Controller(POJO)
 	
 	@RequestMapping("/list") // /list ---HandlerMapping---> 요청이 list() 메소드가 실행
 	public String list(HttpServletRequest request) {
@@ -17,6 +17,7 @@ public class BoardController {
 		list.add("사과");
 		list.add("바나나");
 		list.add("오렌지");
+		// 객체 바인딩
 		request.setAttribute("list", list);
 		return "flist"; // flist.jsp --> 반환 값은 flist로 해야한다.
 	}
