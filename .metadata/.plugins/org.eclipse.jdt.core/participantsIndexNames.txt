@@ -23,6 +23,8 @@ C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \lab104-common-component-tutor\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3645856176.index
 \lab301-mvc\src\main\java
+C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1838158820.index
+\SpringMVC01\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3847399427.index
 \lab102-code-generation\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3284145778.index

@@ -21,7 +21,7 @@
 			<td>작성일자</td>
 			<td>조회수</td>
 		</tr>
-		<%--${}EL --%>
+		<%--${}EL  --%>
 		<c:forEach var="vo" items="${list}">
 			<tr>
 				<td>${vo.num}</td>			 
