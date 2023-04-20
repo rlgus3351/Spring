@@ -19,6 +19,8 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
+
+
 	<div class="card">
 		<div class="card-header">
 			<div class="jumbotron jumbotron-fluid">
@@ -37,30 +39,24 @@
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">BOARD</h4>
-							<p class="card-text">게시판 리스트</p>
-							<table class="table table-bordered table-hover">
-								<thead>
-									<tr>
-										<th>번호</th>
-										<th>제목</th>
-										<th>작성자</th>
-										<th>작성일</th>
-										<th>조회수</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="vo" items="${list}">
-										<tr>
-											<td>${vo.num}</td>
-											<td><a href="${cpath}/get?num=${vo.num}">${vo.title}</a></td>
-											<td>${vo.writer}</td>
-											<td><fmt:formatDate value="${vo.indate}" pattern="yyyy-MM-dd"/></td>
-											<td>${vo.count}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-							<button class="btn btn-primary btn-sm" onclick="location.href='${cpath}/register'">글쓰기</button>
+							<p class="card-text">게시판 글쓰기</p>
+							<form action="${cpath}/register" method="post">
+								<div class="form-group">
+									<label>제목:</label> 
+									<input type="text" name="title" id="title" class="form-control"/>
+								</div>
+								<div class="form-group">
+									<label>내용:</label>
+									<textarea rows="10" name="content" id="content" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<label>작성자:</label> 
+									<input type="text" name="writer" id="writer" class="form-control"/>
+								</div>
+								<button class="btn btn-sm btn-primary" type="button" onclick="location.href='${cpath}/list'">목록</button>
+								<button class="btn btn-sm btn-primary" type="submit">등록</button>
+								<button class="btn btn-sm btn-primary" type="reset">취소</button>
+							</form>
 						</div>
 					</div>
 				</div>

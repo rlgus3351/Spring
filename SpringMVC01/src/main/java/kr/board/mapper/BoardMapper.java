@@ -9,4 +9,9 @@ public interface BoardMapper {
 	
 	// 게시판 전체 리스트 가져오기
 	public List<Board> getLists();
+	
+	// 게시물을 등록하는 메소드
+	public void register(Board vo);
+	
+	public Board get(int num);
 }
