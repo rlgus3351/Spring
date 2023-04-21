@@ -13,5 +13,8 @@
 	<select id = "get" parameterType="int" resultType="kr.board.entity.Board">
 		select * from board where num = #{num} 
 	</select>
+	<update id="modify" parameterType="kr.board.entity.Board">
+		update board set title=#{title},content=#{content} where num=#{num}
+	</update>
 	
 </mapper>
