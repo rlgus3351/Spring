@@ -79,5 +79,7 @@ public class BoardController { // Service(X) -> Controller(POJO)
 		// 수정 성공 후 다시 상세보기 페이지로 이동(/get)
 		return "redirect:/get?num="+vo.getNum();
 	}
+	
+	
 
 }

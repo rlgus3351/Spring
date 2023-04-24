@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:set var="cpath" value="${pageContext.request.contextPath}"/>
+<c:set var="cpath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,18 +40,21 @@
 							<h4 class="card-title">BOARD</h4>
 							<p class="card-text">게시판 수정하기</p>
 							<form action="${cpath}/modify" method="post">
-								<input type="hidden" name="num" value="${vo.num}"/>								
+								<input type="hidden" name="num" value="${vo.num}" />
 								<div class="form-group">
-									<label>제목:</label>
-									<input type="text" name="title" value="${vo.title}" class="form-control"/>
+									<label>제목:</label> <input type="text" name="title"
+										value="${vo.title}" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>내용:</label>
 									<textarea rows="10" name="content" class="form-control">${vo.content}</textarea>
 								</div>
-								<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${cpath}/list'">목록</button>
+
+								<button type="button" class="btn btn-sm btn-primary"
+									onclick="location.href='${cpath}/list'">목록</button>
 								<button type="submit" class="btn btn-sm btn-primary">수정</button>
 								<button type="reset" class="btn btn-sm btn-primary">취소</button>
+
 							</form>
 						</div>
 					</div>
