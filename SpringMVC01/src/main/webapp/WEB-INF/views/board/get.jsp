@@ -86,12 +86,14 @@
 								</tr>
 								<tr>
 									<td colspan="2" style="text-align:center;">
+										<button data-btn="list" class="btn btn-sm btn-warning">목록</button>
 									<c:if test="${vo.username eq mvo.username}">									
 										<button data-btn="modify" class="btn btn-sm btn-warning">수정</button>
-									</c:if>
-										<button data-btn="list" class="btn btn-sm btn-warning">목록</button>
 										<button data-btn="remove" class="btn btn-sm btn-warning">삭제</button>
+									</c:if>
+									<c:if test="${!empty mvo}">
 										<button data-btn="reply" class="btn btn-sm btn-warning">답글</button>
+										</c:if>
 									</td>
 								</tr>
 							</table>
