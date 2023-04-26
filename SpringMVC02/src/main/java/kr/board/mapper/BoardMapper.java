@@ -22,7 +22,7 @@ public interface BoardMapper {
 	public Board get(int num);
 	
 	// 선택한 번호의 게시물 1개를 삭제하는 메소드
-	@Delete("delete from reply where num =#{num}") // 인라인 sql
+	@Update("update reply set bdelete= 1 where num=#{num}") // 인라인 sql
 	public void remove(int num);
 	// 선택한 번호에 해당하는 제목과 내용을 수정하는 메서드 정의
 	public void modify(Board vo);

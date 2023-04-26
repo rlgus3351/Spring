@@ -53,7 +53,14 @@
 									<c:forEach var="vo" items="${list}">
 										<tr>
 											<td>${vo.num}</td>
-											<td><a href="${cpath}/get?num=${vo.num}">${vo.title}</a></td>
+											<td>
+												<c:if test="${vo.blevel>0}">
+													<c:forEach begin="1" end="${vo.blevel}">
+														<span style="padding-left:10px"></span>
+													</c:forEach>
+												</c:if>
+												<a href="${cpath}/get?num=${vo.num}">${vo.title}</a>
+											</td>
 											<td>${vo.writer}</td>
 											<td><fmt:formatDate value="${vo.indate}" pattern="yyyy-MM-dd"/></td>
 											<td>${vo.count}</td>

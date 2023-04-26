@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.board.mapper.BoardMapper">
+	
+	<!-- 전체 게시물을 가져오는 SQL -->
+	<select id = "getLists" resultType="kr.board.entity.Board" parameterType="kr.board.entity.Criteria">
+		select * from reply order by bgroup desc, bseq asc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<insert id="register" parameterType="kr.board.entity.Board">
+		<selectKey keyProperty="bgroup" resultType="kr.board.entity.Board" order="BEFORE">
+			select IFNULL(max(bgroup)+1,0) as bgroup from reply
+		</selectKey>
+		insert into reply (title,content,writer,username,bgroup,bseq,blevel,bdelete)
+		values (#{title},#{content},#{writer},#{username},#{bgroup},0,0,0)
+	</insert>
+	
+	<select id = "get" parameterType="int" resultType="kr.board.entity.Board">
+		select * from reply where num = #{num} 
+	</select>
+	
+	<update id="modify" parameterType="kr.board.entity.Board">
+		update reply set title=#{title},content=#{content} where num=#{num}
+	</update>
+	
+	<update id="replySeqUpdate" parameterType="kr.board.entity.Board">
+		update reply set bseq = bseq+1 where bgroup = #{bgroup} and bseq>#{bseq}
+	</update>
+	
+	<insert id="replyInsert" parameterType="kr.board.entity.Board">
+		insert into reply (title, content,writer,username,bgroup, bseq,blevel,bdelete)
+		values (#{title},#{content},#{writer},#{username},#{bgroup},#{bseq},#{blevel},0)
+	</insert>
+</mapper>
