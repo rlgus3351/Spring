@@ -41,6 +41,7 @@
 							<p class="card-text">답글 쓰기</p>
 								<form action="${cpath}/reply"  method="post">
 									<input type="hidden" name="num" value="${vo.num}" />
+									<input type="hidden" name="page" value="${cri.page}" />
 									<input type="hidden" name="username" value="${mvo.username}" />
 									<div class="form-group">
 										<label>제목:</label>
@@ -54,7 +55,7 @@
 										<label>작성자:</label>
 										<input type="text" name="writer", class="form-control", value="${mvo.username}" readonly="readonly"/>									
 									</div>
-									<button type="button" class="btn btn-sm btn-primary">목록</button>
+									<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${cpath}/list?page=${cri.page}'">목록</button>
 									<button type="submit" class="btn btn-sm btn-primary">답글</button>
 									<button type="reset" class="btn btn-sm btn-primary">취소</button>
 								</form>

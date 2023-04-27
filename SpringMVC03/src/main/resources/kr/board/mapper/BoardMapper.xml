@@ -32,4 +32,5 @@
 		insert into reply (title, content,writer,username,bgroup, bseq,blevel,bdelete)
 		values (#{title},#{content},#{writer},#{username},#{bgroup},#{bseq},#{blevel},0)
 	</insert>
+	
 </mapper>

@@ -28,7 +28,7 @@
 			var formData = $("#frm");
 			if(btn=="list"){
 				formData.attr("action","${cpath}/list");
-				formData.attr("method","post");
+				formData.attr("method","get");
 				formData.find("#num").remove();
 			}else if(btn=="modify"){
 				formData.attr("action","${cpath}/modify");
@@ -99,7 +99,11 @@
 								</tr>
 							</table> 
 							<form id="frm">
+								<!-- 글 번호 -->
 								<input type="hidden" name="num" id="num" value="${vo.num}"/>
+								<!-- 페이지 번호 -->
+								<input type="hidden" name="page" value="${cri.page}"/>
+								
 							</form>
 						</div>
 					</div>

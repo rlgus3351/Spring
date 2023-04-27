@@ -15,7 +15,7 @@ public class PageMaker {
 	private int startPage;
 
 	// 화면에 보여질 페이지의 수
-	private int displayPageNum = 5;
+	private int displayPageNum = 3;
 
 	// 끝 페이지 번호 (조정 가능)
 	private int endPage;

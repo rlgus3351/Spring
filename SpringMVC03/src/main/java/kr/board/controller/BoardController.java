@@ -1,17 +1,20 @@
 package kr.board.controller;
 
+import java.security.interfaces.RSAMultiPrimePrivateCrtKey;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.board.entity.Board;
 import kr.board.entity.Criteria;
+import kr.board.entity.PageMaker;
 import kr.board.mapper.BoardMapper;
 
 //JDBC -> Mybatis -> Mybatis-Spring -> Spring JPA
@@ -25,6 +28,12 @@ public class BoardController { // Service(X) -> Controller(POJO)
 		
 		List<Board> list = mapper.getLists(cri);
 		model.addAttribute("list", list);
+		
+		// 페이징 처리에 필요한 부분
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+		pm.setTotalCount(mapper.totalCount());
+		model.addAttribute("pm", pm);
 		return "board/list"; // flist.jsp --> 반환 값은 flist로 해야한다.
 		// WEB-INF/views/list.jsp
 	}
@@ -47,24 +56,26 @@ public class BoardController { // Service(X) -> Controller(POJO)
 	}
 	// 게시글의 상세정보를 확인하는 메소드
 	@GetMapping("/get")
-	public String get(int num, Model model) {
+	public String get(int num, Model model, @ModelAttribute("cri") Criteria cri) {
 		Board vo = mapper.get(num);
 		model.addAttribute("vo", vo);
-		mapper.count(num);
 		// 조회수 누적
+		mapper.count(num);
+		
 		return "board/get";
 	}
 
 	// 선택한 게시글을 삭제하는 메소드
-	@GetMapping("/remove")
-	public String remove(int num) {
+	@RequestMapping("/remove")
+	public String remove(int num, Criteria cri,RedirectAttributes rttr) {
 		mapper.remove(num);
+		rttr.addAttribute("page", cri.getPage());
 		return "redirect:/list";
 	}
 	
 	// 선택한 게시글 수정하는 메소드
 	@GetMapping("/modify")
-	public String modify(int num, Model model) {
+	public String modify(int num, Model model, @ModelAttribute("cri") Criteria cri) {
 		// 선택한 게시글 보여주는 메소드
 		Board vo =mapper.get(num);
 		model.addAttribute("vo", vo);
@@ -72,17 +83,18 @@ public class BoardController { // Service(X) -> Controller(POJO)
 	}
 	
 	@PostMapping("/modify")
-	public String modify(Board vo, RedirectAttributes rttr) {
+	public String modify(Board vo, RedirectAttributes rttr, Criteria cri) {
 		mapper.modify(vo);
 		// 수정 성공 후 다시 리스트 페이지에 이동(/list)
 		// return "redirect:/list";
 		// 수정 성공 후 다시 상세보기 페이지로 이동(/get)
 		rttr.addAttribute("num", vo.getNum());
+		rttr.addAttribute("page", cri.getPage());
 		return "redirect:/get"; //?num=10이 넘어간다.
 	}
 	
 	@GetMapping("/reply") // ?num = 10
-	public String reply(int num, Model model) {
+	public String reply(int num, Model model, @ModelAttribute("cri") Criteria cri) {
 		//부모글 정보
 		Board vo = mapper.get(num);
 		model.addAttribute("vo", vo);
@@ -90,7 +102,7 @@ public class BoardController { // Service(X) -> Controller(POJO)
 	}
 	
 	@PostMapping("/reply") //num,username,title,content,writer,bgroup, bseq, blevel,bdelete
-	public String reply(Board vo) {
+	public String reply(Board vo, RedirectAttributes rttr, Criteria cri) {
 		// 답글에 필요한 정보 만들기
 		
 		// 1. 부모글(원글)의 정보를 가져오기
@@ -111,6 +123,8 @@ public class BoardController { // Service(X) -> Controller(POJO)
 		// 6. 답글 저장하기
 		mapper.replyInsert(vo);
 		
+		// 7. 페이지 정보 달고가기
+		rttr.addAttribute("page", cri.getPage());
 		return "redirect:/list";
 	}
 

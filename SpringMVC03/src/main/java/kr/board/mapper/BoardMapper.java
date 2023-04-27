@@ -42,4 +42,7 @@ public interface BoardMapper {
 	// 답글 저장 메소드
 	public void replyInsert(Board vo);
 	
+	// 전체 게시글 수 
+	@Select("select count(*) from reply")
+	public int totalCount();
 }
