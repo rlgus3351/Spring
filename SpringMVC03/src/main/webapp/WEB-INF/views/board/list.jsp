@@ -23,9 +23,22 @@
 <c:set var="cpath" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
 	$(document).ready(function(){
+		var pageForm = $("#pageForm")
 		$(".pagination a").on("click", function(e){
 			e.preventDefault(); // a tag의 고유한 기능을 막는 방법
-			
+			var page = $(this).attr('href');
+			$("#page").val(page);
+			pageForm.submit();// 폼 전송
+		});
+		// 상세 보기로 이동하는 부분
+		$(".move").on("click", function(e){
+			e.preventDefault(); // a tag의 고유한 기능을 막는 방법
+			var num = $(this).attr("href");
+			var tag = "<input type='hidden' name='num' value='"+num+"'>";
+			pageForm.append(tag);
+			pageForm.attr("action","${cpath}/get");
+			pageForm.attr("method","get");
+			pageForm.submit();// 폼 전송
 		});
 	});
 
@@ -75,7 +88,7 @@
                                  <td>${vo.num}</td>
                                  <td><c:if test="${vo.blevel==0}">
                                        <c:if test="${vo.bdelete==0}">
-                                          <a href="${cpath}/get?num=${vo.num}&page=${pm.cri.page}">${vo.title}</a>
+                                          <a class="move" href="${vo.num}">${vo.title}</a>
                                        </c:if>
                                        <c:if test="${vo.bdelete==1}">
                                           <a href="javascript:goMsg()">삭제된 게시물입니다.</a>
@@ -86,7 +99,7 @@
                                        </c:forEach>
                                        <i class="bi bi-arrow-return-right"></i>
                                        <c:if test="${vo.bdelete==0}">
-                                          <a href="${cpath}/get?num=${vo.num}&page=${pm.cri.page}">[RE] ${vo.title}</a>
+                                          <a class="move" href="${vo.num}">[RE] ${vo.title}</a>
                                        </c:if>
                                        <c:if test="${vo.bdelete==1}">
                                           <a href="javascript:goMsg()">[RE]삭제된 게시물입니다.</a>
@@ -110,13 +123,14 @@
 				  		<li class="page-item ${pm.cri.page==pageNum ? 'active':''}"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
 				  	</c:forEach>
 				  	  <c:if test="${pm.next}">
-				  		<li class="page-item"><a class="page-link" href="${cpath}/list?page=${pm.endPage+1}">Next</a></li>
+				  		<li class="page-item"><a class="page-link" href="${pm.endPage+1}">Next</a></li>
 				  	</c:if>
   				</ul>
+                     <!-- 페이징 리스트 출력 끝 -->
                      
-                     
-                     
-                     
+                     <form action="${cpath}/list" method='post' id="pageForm">
+                   		<input type ="hidden" name="page" id="page" value="${pm.cri.page}" />
+                     </form>
                      <c:if test="${!empty mvo}">
                         <button class="btn btn-warning btn-sm" style="color: white"
                            onclick="location.href='${cpath}/register'">글쓰기</button>
