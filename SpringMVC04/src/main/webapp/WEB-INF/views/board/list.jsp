@@ -51,19 +51,45 @@
 			// kakao Daum OpenAPI 이용해서 책을 검색 (요청---AJAX---> 응답)
 			$.ajax({
 				url:"https://dapi.kakao.com/v3/search/book?target=title",
-				headers : {"Authorization":"KakaoAK d24b0460dee59cba9c2e29c509d714add"},
+				headers : {"Authorization":"KakaoAK d4b0460dee59cba9c2e29c509d714add"},
 				type:"GET",
 				data:{"query":bookname},
 				dataType:"json",
 				success : bookPrint,
 				error : function(){alert("error");}
 			});
-			
-			
+		});
+		
+		// 주소를 입력하여 위도와 경도를 뽑아서 지도를 출력하는 기능
+		
+		$("#mapsearch").click(function(){
+			var address=$("#address").val();
+			if(address==""){
+				alert("주소를 입력하세요.");
+				return false;
+			}
+			$.ajax({
+				url:"https://dapi.kakao.com/v2/local/search/address.json",
+				headers : {"Authorization":"KakaoAK d4b0460dee59cba9c2e29c509d714add"},
+				type:"GET",
+				data:{"query": address},
+				dataType:"json",
+				success : mapPrint,
+				error : function(){alert("error");}
+			});
 		});
 			
 	
 	});
+	function mapPrint(data){
+		console.log(data);
+		var x= data.documents[0].x; //경도
+		var y = data.documents[0].y; // 위도
+		console.log(x);
+		console.log(y);
+	}
+	
+	
 	function bookPrint(data){
 		console.log(data);
 		
