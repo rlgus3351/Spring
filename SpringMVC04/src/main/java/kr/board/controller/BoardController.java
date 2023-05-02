@@ -62,7 +62,6 @@ public class BoardController { // Service(X) -> Controller(POJO)
 		model.addAttribute("vo", vo);
 		// 조회수 누적
 		mapper.count(num);
-		
 		return "board/get";
 	}
 
@@ -71,6 +70,8 @@ public class BoardController { // Service(X) -> Controller(POJO)
 	public String remove(int num, Criteria cri,RedirectAttributes rttr) {
 		mapper.remove(num);
 		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
 		return "redirect:/list";
 	}
 	
@@ -91,6 +92,8 @@ public class BoardController { // Service(X) -> Controller(POJO)
 		// 수정 성공 후 다시 상세보기 페이지로 이동(/get)
 		rttr.addAttribute("num", vo.getNum());
 		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
 		return "redirect:/get"; //?num=10이 넘어간다.
 	}
 	
@@ -126,7 +129,11 @@ public class BoardController { // Service(X) -> Controller(POJO)
 		
 		// 7. 페이지 정보 달고가기
 		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
 		return "redirect:/list";
 	}
+	
+	
 
 }

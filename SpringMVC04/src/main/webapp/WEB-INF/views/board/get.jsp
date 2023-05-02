@@ -102,8 +102,9 @@
 								<!-- 글 번호 -->
 								<input type="hidden" name="num" id="num" value="${vo.num}"/>
 								<!-- 페이지 번호 -->
-								<input type="hidden" name="page" value="${cri.page}"/>
-								
+								<input type="hidden" id = "page" name="page" value="${cri.page}"/>
+								<input type="hidden" id ="type" name="type" value="${cri.type}"/>
+                        		<input type="hidden" id ="keyword" name="keyword" value="${cri.keyword}"/>
 							</form>
 						</div>
 					</div>

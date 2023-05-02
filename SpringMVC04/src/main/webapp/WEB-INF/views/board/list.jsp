@@ -40,7 +40,60 @@
 			pageForm.attr("method","get");
 			pageForm.submit();// 폼 전송
 		});
+		
+		// 책 검색 버튼이 클릭 되었을 때 처리
+		$("#search").click(function(){
+			var bookname= $("#bookname").val();
+			if(bookname ==""){
+				alert("책 제목을 입력하세요.");
+				return false;
+			}
+			// kakao Daum OpenAPI 이용해서 책을 검색 (요청---AJAX---> 응답)
+			$.ajax({
+				url:"https://dapi.kakao.com/v3/search/book?target=title",
+				headers : {"Authorization":"KakaoAK d24b0460dee59cba9c2e29c509d714add"},
+				type:"GET",
+				data:{"query":bookname},
+				dataType:"json",
+				success : bookPrint,
+				error : function(){alert("error");}
+			});
+			
+			
+		});
+			
+	
 	});
+	function bookPrint(data){
+		console.log(data);
+		
+		var bList = "<table class='table table-hover'>";
+		bList+="<thead>";
+		bList+="<tr>";
+		bList+="<th>책 이미지</th>";
+		bList+="<th>가격</th>";
+		bList+="<th>출판사</th>";
+		bList+="</tr>";
+		bList+="</thead>";
+		$.each(data.documents, function(index, book){
+			var image = book.thumbnail;
+			var price = book.price;
+			var url = book.url;
+			var publisher = book.publisher;
+			bList+="<tbody>";
+			bList+="<tr>";
+			bList+="<td><a href='"+url+"'><img src='"+image+"' width='50px' heiht='60px'/></td>";
+			bList+="<td>"+price+"</td>";
+			bList+="<td>"+publisher+"</td>";
+			
+			
+			bList+="</tr>";
+			bList+="</tbody>";
+		});
+		bList+="</table>";
+		
+		$("#bookList").html(bList);
+	}
 
 	
    function goMsg() {
@@ -119,9 +172,9 @@
                      		<div class="input-group mb-3">
                      			<div class="input-group-append">
                      				<select name="type" class="form-control">
-                     					<option value="writer" ${pm.cri.type=='writer'?'selected':''}>이름</option>
-                     					<option value="title" ${pm.cri.type=='title'?'selected':''}>제목</option>
-                     					<option value="content" ${pm.cri.type=='content'?'selected':''}>내용</option>
+                     					<option value="writer" ${pm.cri.type=='writer' ? 'selected' : ''}>이름</option>
+                                   		<option value="title" ${pm.cri.type=='title' ? 'selected' : ''}>제목</option>
+                                   		<option value="content" ${pm.cri.type=='content' ? 'selected' : ''}>내용</option>
                      				</select>
                      			</div>
                      			<input type="text" name="keyword" class="form-control" value="${pm.cri.keyword}"/>
@@ -149,8 +202,11 @@
   				</ul>
                      <!-- 페이징 리스트 출력 끝 -->
                      
-                     <form action="${cpath}/list" method='post' id="pageForm">
-                   		<input type ="hidden" name="page" id="page" value="${pm.cri.page}" />
+                     <form id="pageForm" action="${cpath}/list" method="post">
+                        <input type="hidden" id ="page" name="page" value="${pm.cri.page}"/>
+                        <input type="hidden" id ="type" name="type" value="${pm.cri.type}"/>
+                        <input type="hidden" id ="keyword" name="keyword" value="${pm.cri.keyword}"/>
+                        
                      </form>
                      <c:if test="${!empty mvo}">
                         <button class="btn btn-primary btn-sm" style="color: white"

@@ -9,7 +9,7 @@
     
 <!-- contextpath를 가져오는 방법 -->
 <c:set var ="cpath" value = "${pageContext.request.contextPath}"/> <!-- /root 그대로 가져와짐 -->
-   
+
  
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +22,17 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <link rel = "stylesheet" href="${cpath}/resources/css/style.css">
+  <script type="text/javascript">
+  	$(document).ready(function(){
+  		$("#list").click(function({
+  			var frm = $("#frm");
+  			frm.attr("action","${capth}/list"); // ?num?&page?&type?&keyword
+  			frm.submit();
+  		}));
+  		
+  	});
+  
+  </script>
 </head>
 <body>
  
@@ -51,9 +62,11 @@
                <div class = "card-body">
                   <h4 class = "card-title">BOARD</h4>
                   <p class = "card-text">게시판 수정하기</p>
-                     <form action="${cpath}/modify" method = "post">
+                     <form id="frm" action="${cpath}/modify" method = "post">
                         <input type = "hidden" name = "page" value = "${cri.page}"/>
                         <input type = "hidden" name = "num" value = "${vo.num}"/>
+                        <input type="hidden" id ="type" name="type" value="${pm.cri.type}"/>
+                        <input type="hidden" id ="keyword" name="keyword" value="${pm.cri.keyword}"/>
                         <div class = "form-group">
                            <label>제목</label>
                               <input type = "text" name = "title" value="${vo.title}" id = "title" class = "form-control"/>
@@ -66,8 +79,8 @@
                         
                         
                         <br>
-                        <button type = "button" class="btn btn-primary btn-sm" onclick = "location.href ='${cpath}/list?page=${cri.page}'">목록</button>
-                        <button type = "submit" class="btn btn-primary btn-sm" >수정</button>
+                        <button id = "list" type = "button" class="btn btn-primary btn-sm">목록</button>
+                        <button type = "submit" class="btn btn-primary btn-sm">수정</button>
                         <button type = "reset" class="btn btn-primary btn-sm">취소</button>
                      </form>
                </div>
@@ -83,7 +96,7 @@
     
     <!-- footer 시작 -->
     <div class="card-footer">
-    빅데이터 분석서비스 개발자 양성과정(구소현)
+    빅데이터 분석서비스 개발자 양성과정(권기현)
     </div>
     
   </div>

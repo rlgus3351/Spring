@@ -18,6 +18,16 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script type="text/javascript">
+  	$(document).ready(function(){
+  		$("#list").click(function({
+  			var frm = $("#frm");
+  			frm.attr("action","${capth}/list"); // ?num?&page?&type?&keyword
+  			frm.submit();
+  		}));
+  		
+  	});
+  </script>
 </head>
 <body>
 	<div class="card">
@@ -39,10 +49,12 @@
 						<div class="card-body">
 							<h4 class="card-title">BOARD</h4>
 							<p class="card-text">답글 쓰기</p>
-								<form action="${cpath}/reply"  method="post">
+								<form id="frm" action="${cpath}/reply"  method="post">
 									<input type="hidden" name="num" value="${vo.num}" />
 									<input type="hidden" name="page" value="${cri.page}" />
 									<input type="hidden" name="username" value="${mvo.username}" />
+									<input type="hidden" name="type" value="${cri.type}">
+									<input type="hidden" name="keyword" value="${cri.keyword}">
 									<div class="form-group">
 										<label>제목:</label>
 										<input type="text" name="title", class="form-control", value="${vo.title}"/>									
@@ -55,7 +67,7 @@
 										<label>작성자:</label>
 										<input type="text" name="writer", class="form-control", value="${mvo.username}" readonly="readonly"/>									
 									</div>
-									<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${cpath}/list?page=${cri.page}'">목록</button>
+									<button id="list" type="button" class="btn btn-sm btn-primary">목록</button>
 									<button type="submit" class="btn btn-sm btn-primary">답글</button>
 									<button type="reset" class="btn btn-sm btn-primary">취소</button>
 								</form>

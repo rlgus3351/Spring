@@ -51,6 +51,7 @@
 	
 	<!-- 전체 게시글 수 조회 -->
 	<select id="totalCount" resultType="int" parameterType="kr.board.entity.Criteria">
-		select count(*) from reply <include refid="search"/> 
-	</select>
+      select count(*) from reply
+      <include refid="search"/>
+   </select>
 </mapper>
