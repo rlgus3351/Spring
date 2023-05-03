@@ -45,4 +45,7 @@ public interface BoardMapper {
 	// 전체 게시글 수 
 	//@Select("select count(*) from reply") --> 검색 기능 추가 하기 이전 게시글 수 sql문 
 	public int totalCount(Criteria cri); 
+	
+	@Select("select * from board order by num desc")
+	public List<Board> ajaxList();
 }

@@ -1,6 +1,5 @@
 package kr.board.controller;
 
-import java.security.interfaces.RSAMultiPrimePrivateCrtKey;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.board.entity.Board;
@@ -22,7 +22,7 @@ import kr.board.mapper.BoardMapper;
 public class BoardController { // Service(X) -> Controller(POJO)
 	@Autowired
 	private BoardMapper mapper;
-
+	
 	@RequestMapping("/list") // /list ---HandlerMapping---> 요청이 list() 메소드가 실행
 	public String list(Criteria cri,Model model) {
 		
@@ -134,6 +134,16 @@ public class BoardController { // Service(X) -> Controller(POJO)
 		return "redirect:/list";
 	}
 	
+	// http://121.179.35.125:8081/mvc04/ajaxList	
+	@RequestMapping("/ajaxlist")
+	public @ResponseBody List<Board> ajaxList() {
+		List<Board> list =mapper.ajaxList();
+		
+		// list 내용을 json 형식으로 변환
+		// 변환된 json 객체를 응답을 하면 된다.
+		
+		return list; //jsp (forward), controller(redirect)
+	}
 	
 
 }
